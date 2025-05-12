@@ -138,7 +138,7 @@ const CalculatorGrid = React.forwardRef<CalculatorGridHandle, CalculatorGridProp
             handleToggle
         }));
         return (
-            <View style={{ padding: spacing }}>
+            <View style={{ padding: spacing, flex: 1 }}>
                 {scientificLayout.map((row, rowIndex) => (
                     <Animated.View
                         key={`row-${rowIndex}`}

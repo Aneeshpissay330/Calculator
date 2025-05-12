@@ -85,7 +85,7 @@ const Home = () => {
       <View style={{ flex: 1 }} />
 
       {/* CalculatorGrid at the bottom */}
-      <View style={{ position: 'absolute', bottom: 0, width: '100%' }}>
+      <View style={{ position: 'absolute', bottom: 10, width: '100%' }}>
         <CalculatorGrid
           ref={calculatorGridRef}
           isScientific={isScientific}

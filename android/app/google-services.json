@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "78239587292",
+    "project_id": "calculator-dde5d",
+    "storage_bucket": "calculator-dde5d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:78239587292:android:180cb5ee6c5182f9948d19",
+        "android_client_info": {
+          "package_name": "com.aneesh.calculator"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3WyLnAagyOobG9L5HG2SwSRkRhcQ40oU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
