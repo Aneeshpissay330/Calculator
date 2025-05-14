@@ -1,3 +1,5 @@
+// src/screens/HistoryDisplay.tsx
+
 import React, { useRef, useEffect } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import CustomText from '../../../components/CustomText';
@@ -5,43 +7,63 @@ import CustomText from '../../../components/CustomText';
 interface HistoryDisplayProps {
   expression: string;
   result: string;
-  timestamp: number; // Unix timestamp in ms
+  timestamp: number; // Unix ms
+  isDarkMode: boolean;
 }
 
-const HistoryDisplay = ({ expression, result, timestamp }: HistoryDisplayProps) => {
-  const expressionScrollViewRef = useRef<ScrollView>(null);
-  const resultScrollViewRef = useRef<ScrollView>(null);
+const HistoryDisplay: React.FC<HistoryDisplayProps> = ({
+  expression,
+  result,
+  timestamp,
+  isDarkMode,
+}) => {
+  const exprRef = useRef<ScrollView>(null);
+  const resRef  = useRef<ScrollView>(null);
 
   useEffect(() => {
-    expressionScrollViewRef.current?.scrollToEnd({ animated: true });
-    resultScrollViewRef.current?.scrollToEnd({ animated: true });
+    exprRef.current?.scrollToEnd({ animated: true });
+    resRef.current?.scrollToEnd({ animated: true });
   }, [expression, result]);
 
   const formatDate = (ts: number) => {
-    const date = new Date(ts);
-    return `${date.toLocaleDateString()} ${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+    const d = new Date(ts);
+    return `${d.toLocaleDateString()} ${d.toLocaleTimeString([], {
+      hour: '2-digit',
+      minute: '2-digit',
+    })}`;
   };
 
+  // Only use #505050 (dark) and #d4d4d2 (light)
+  const bgColor     = isDarkMode ? '#505050' : '#d4d4d2';
+  const borderColor = isDarkMode ? '#d4d4d2' : '#505050';
+  const textColor   = isDarkMode ? '#d4d4d2' : '#505050';
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: bgColor, borderColor }]}>
       <ScrollView
-        ref={expressionScrollViewRef}
+        ref={exprRef}
         horizontal
-        contentContainerStyle={styles.expressionScroll}
         showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.expressionScroll}
       >
-        <CustomText style={styles.expression}>{expression}</CustomText>
+        <CustomText style={[styles.expression, { color: textColor }]}>
+          {expression}
+        </CustomText>
       </ScrollView>
       <ScrollView
-        ref={resultScrollViewRef}
+        ref={resRef}
         horizontal
-        contentContainerStyle={styles.resultScroll}
         showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.resultScroll}
       >
-        <CustomText style={styles.result}>{result}</CustomText>
+        <CustomText style={[styles.result, { color: textColor }]}>
+          {result}
+        </CustomText>
       </ScrollView>
       <View style={styles.timestampContainer}>
-        <CustomText style={styles.timestamp}>{formatDate(timestamp)}</CustomText>
+        <CustomText style={[styles.timestamp, { color: textColor }]}>
+          {formatDate(timestamp)}
+        </CustomText>
       </View>
     </View>
   );
@@ -49,18 +71,16 @@ const HistoryDisplay = ({ expression, result, timestamp }: HistoryDisplayProps) 
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#f7f7f7',
-    borderRadius: 16,
-    padding: 20,
     marginHorizontal: 20,
     marginVertical: 10,
+    borderRadius: 16,
+    padding: 20,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.15,
     shadowRadius: 2,
     elevation: 3,
     borderWidth: 1,
-    borderColor: '#e0e0e0',
   },
   expressionScroll: {
     flexGrow: 1,
@@ -76,12 +96,10 @@ const styles = StyleSheet.create({
   expression: {
     fontSize: 20,
     fontWeight: '500',
-    color: '#505050',
   },
   result: {
     fontSize: 32,
     fontWeight: '700',
-    color: '#505050',
   },
   timestampContainer: {
     marginTop: 8,
@@ -89,7 +107,6 @@ const styles = StyleSheet.create({
   },
   timestamp: {
     fontSize: 12,
-    color: '#999',
     fontStyle: 'italic',
   },
 });

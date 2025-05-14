@@ -2,17 +2,19 @@ import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { persistReducer, persistStore } from 'redux-persist';
 import { reduxStorage } from '../storage'; // your MMKV-based storage
 import historyReducer from '../features/history'; // your history slice
+import themeReducer from '../features/theme';   // your theme slice
 
 // Combine reducers (in case you add more later)
 const rootReducer = combineReducers({
   history: historyReducer,
+  theme: themeReducer,
 });
 
 // Configure persist
 const persistConfig = {
   key: 'root',
   storage: reduxStorage,
-  whitelist: ['history'], // Persist only the history slice
+  whitelist: ['history', 'theme'], // Persist both history and theme slices
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
